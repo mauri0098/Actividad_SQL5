@@ -221,6 +221,83 @@ namespace Actividad_SQL5
             return tabla;
         }
 
+     
+        public void modificar(string nombre, int chofer)
+        {
+            Conector.Open();
+
+            
+
+            var sqlUpdate = Conector.CreateCommand();
+            sqlUpdate.CommandText = $@"
+                                        UPDATE Choferes 
+                                        SET nombre = '{nombre}' 
+                                        WHERE chofer={chofer}
+                                    ";
+
+           
+            sqlUpdate.Parameters.AddWithValue("$nombre", nombre);
+            sqlUpdate.Parameters.AddWithValue("$chofer", chofer);
+            sqlUpdate.ExecuteNonQuery();
+
+            Conector.Close();
+
+        }
+
+        public DataTable totalLitros2()
+        {
+            tabla = new DataTable();
+            tabla.Columns.Add("Chofer");
+            tabla.Columns.Add("AA");
+            tabla.Columns.Add("Total litros");
+            Conector.Open();
+
+            sql = @"SELECT Combustible.chofer ,Combustible.aa, sum(Combustible.litros) AS litros
+                    FROM Combustible 
+                    GROUP BY Combustible.aa, Combustible.chofer";
+
+            Comando.Connection = Conector;
+            Comando.CommandType = CommandType.Text;
+            Comando.CommandText = sql;
+
+            SQLiteDataReader dr = Comando.ExecuteReader();
+            foreach (var f in dr)
+            {
+                tabla.Rows.Add(dr["chofer"],dr["aa"], dr["litros"]);
+            }
+           
+            Conector.Close();
+
+            return tabla;
+        }
+        public string Chofer(int chofer)
+        {
+            string nombre;
+            Conector.Open();
+            sql = $"SELECT nombre FROM Choferes WHERE chofer={chofer}";
+
+            Comando.Connection = Conector;
+            Comando.CommandType = CommandType.Text;
+            Comando.CommandText = sql;
+
+            SQLiteDataReader dr = Comando.ExecuteReader();
+
+            if (dr.HasRows == true)
+            {
+                dr.Read();
+                nombre = dr["nombre"].ToString();
+                dr.Close();
+            }
+            else
+            {
+                nombre = "";
+            }
+            Conector.Close();
+            return nombre;
+
+        }
+
+
 
 
 
@@ -228,4 +305,7 @@ namespace Actividad_SQL5
 
 
     }
+
+
+
 }

@@ -12,7 +12,7 @@ namespace Actividad_SQL5
     internal class empresita
     {
         // Método que devuelve un DataTable con los empleados filtrados por SectorID
-        public DataTable Empleado(int SectorID)
+        public DataTable COPARACION_SECTOR(int SectorID)
         {
             // Crear un objeto DataTable para almacenar los resultados de la consulta
             DataTable tabla = new DataTable();
