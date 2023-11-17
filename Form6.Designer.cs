@@ -44,7 +44,7 @@
             this.Chofer,
             this.AA,
             this.TotalLitros});
-            this.Grila.Location = new System.Drawing.Point(22, 12);
+            this.Grila.Location = new System.Drawing.Point(21, 12);
             this.Grila.Name = "Grila";
             this.Grila.ReadOnly = true;
             this.Grila.Size = new System.Drawing.Size(401, 234);
